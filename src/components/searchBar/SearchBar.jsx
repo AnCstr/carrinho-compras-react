@@ -1,12 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { BsSearch } from "react-icons/bs";
 import "./SearchBar.css"
+import pesquisaProduto from "../../utils/pesquisaProduto";
+import AppContext from "../../context/AppContext";
 
 function SearchBar() {
 
-    const [searchValue, setSearchValue] = useState("");
+    const [searchValue, setSearchValue] = useState('');
+    const { setProducts } = useContext(AppContext);
+
+    const handleSearch = (event) => {
+        event.preventDefault();
+        const products = pesquisaProduto(searchValue);
+        
+        setProducts(products)
+        setSearchValue('')
+    }
+
     return (
-        <form className="search-bar">
+        <form className="search-bar" onSubmit={handleSearch}>
         <input 
         type="search" 
         value={searchValue}
